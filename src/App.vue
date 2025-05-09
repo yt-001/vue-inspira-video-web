@@ -1,15 +1,15 @@
 <template>
-  <div class="flex">
+  <div class="flex main-backgroud">
     <!-- 左侧菜单栏 -->
     <div class="w-64 bg-background border-r border-border p-4 rounded-lg flex flex-col justify-between">
       <div class="flex flex-col gap-4">
-        <HoverButton text="首页" class="w-full" />
-        <HoverButton text="视频" class="w-full" />
-        <HoverButton text="收藏" class="w-full" />
+        <HoverButton text="首页" class="w-full" :icon="HouseIcon" iconColor="#635DF7" />
+        <HoverButton text="视频" class="w-full" :icon="VideoIcon" iconColor="#FF6B6B" />
+        <HoverButton text="收藏" class="w-full" :icon="LikeIcon" iconColor="#4CAF50" />
       </div>
       <div class="flex flex-col gap-4">
-        <HoverButton text="设置" class="w-full" />
-        <HoverButton text="疑问" class="w-full" />
+        <HoverButton text="设置" class="w-full" :icon="PersonalIcon" iconColor="#9C27B0" />
+        <HoverButton text="疑问" class="w-full" :icon="MessageIcon" iconColor="#2196F3" />
       </div>
     </div>
     <!-- 主内容区域 -->
@@ -25,7 +25,7 @@
       <!-- 顶部导航栏 -->
       <div class="flex h-16 items-center justify-center border-b border-border px-6 gap-4">
         <VanishingInput v-model="text" :placeholders="placeholders" />
-        <HoverButton text="登录" />
+        <HoverButton text="登录" style="border: 0;"/>
         <ThemeToggle />
       </div>
       <!-- 内容区域 -->
@@ -40,10 +40,14 @@
 import HoverButton from './components/HoverButton.vue'
 import { ref, watch } from 'vue'
 import VanishingInput from './components/VanishingInput.vue';
+import HouseIcon from './components/icons/house.vue';
+import VideoIcon from './components/icons/video.vue';
+import LikeIcon from './components/icons/like.vue';
+import PersonalIcon from './components/icons/personal.vue';
+import MessageIcon from './components/icons/message.vue';
 import ParticlesBg from './components/ParticlesBg.vue';
 import { useColorMode } from '@vueuse/core';
 import ThemeToggle from './components/ThemeToggle.vue';
-import { backIn } from 'motion-v/es';
 
 const colorMode = useColorMode();
 const isDark = ref(colorMode.value === 'dark');
@@ -80,7 +84,16 @@ const text = ref("");
   width: 16rem;
 }
 .bg-background {
-  background-color: #f0f0f0;
+  background-color: #161823;
+}
+.dark .bg-background {
+  background-color: #8c94c2;
+}
+.main-backgroud{
+  background-color: #161823;
+}
+.dark .main-backgroud{
+  background-color: #ffffff;
 }
 .border-r {
   border-right: 1px solid #ccc;

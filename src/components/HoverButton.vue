@@ -9,9 +9,11 @@
     "
   >
     <div class="flex items-center gap-2">
-      <div
-        class="size-2 scale-100 rounded-lg bg-primary transition-all duration-300 group-hover:scale-[100.8]"
-      ></div>
+      <component
+        :is="props.icon"
+        class="size-5 scale-100 transition-all duration-300 group-hover:scale-[100.8]"
+        :color="props.iconColor"
+      />
       <span
         class="inline-block whitespace-nowrap transition-all duration-300 group-hover:translate-x-12 group-hover:opacity-0"
       >
@@ -49,9 +51,13 @@ import { ref } from "vue";
 interface Props {
   text?: string;
   class?: string;
+  icon?: any;
+  iconColor?: string;
 }
+
 const props = withDefaults(defineProps<Props>(), {
   text: "Button",
+  iconColor: "#635DF7"
 });
 
 const buttonRef = ref<HTMLButtonElement>();
