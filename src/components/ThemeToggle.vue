@@ -2,6 +2,7 @@
   <button
     @click="toggleTheme"
     class="relative size-10 rounded-full bg-background border border-border p-2 transition-colors hover:bg-muted"
+    :class="{ 'rotate-animation': isRotating }"
     :title="isDark ? '切换到亮色模式' : '切换到暗色模式'"
   >
     <div
@@ -53,12 +54,36 @@ import { useColorMode } from '@vueuse/core';
 // 使用 useColorMode 切换主题状态，并更新 isDark 的值
 const colorMode = useColorMode();
 const isDark = ref(colorMode.value === 'dark');
+const isRotating = ref(false);
 
 // 切换主题函数
 // 该函数通过更改 colorMode 的值来切换主题状态
 // 并根据新的主题状态更新 isDark 的值
 const toggleTheme = () => {
-  colorMode.value = colorMode.value === 'dark' ? 'light' : 'dark';
-  isDark.value = colorMode.value === 'dark';
+  isRotating.value = true;
+  setTimeout(() => {
+    colorMode.value = colorMode.value === 'dark' ? 'light' : 'dark';
+    isDark.value = colorMode.value === 'dark';
+    setTimeout(() => {
+      isRotating.value = false;
+    }, 600);
+  }, 300);
 };
+
 </script>
+
+<style scoped>
+.rotate-animation {
+  animation: rotate 0.6s ease-in-out;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+</style>

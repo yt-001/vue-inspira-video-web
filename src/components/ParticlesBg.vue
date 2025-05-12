@@ -3,7 +3,7 @@
       ref="canvasContainerRef"
       :class="$props.class"
       aria-hidden="true"
-      :style="{ backgroundColor: isDark ? '#000' : '#FFF' }"
+      :style="{ backgroundColor: isDark ? '#414350' : '#FFF' }"
     >
       <canvas ref="canvasRef"></canvas>
     </div>
