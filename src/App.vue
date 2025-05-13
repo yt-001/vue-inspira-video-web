@@ -36,7 +36,7 @@
       </div>
       <!-- 内容区域 - 固定大小且半透明的视图容器 -->
       <div class="view-container p-6 bg-background/70 backdrop-blur-md rounded-lg m-4 overflow-auto">
-        <Recommend /><router-view></router-view>
+        <Recommend />
       </div>
     </div>
   </div>
@@ -95,7 +95,7 @@ const text = ref("");
   border-color: #545768;
 }
 .dark .bg-background {
-  background-color: #8c94c2;
+  background-color: #f0f0f0;
   border-color: #ccc;
 }
 .main-backgroud{
@@ -107,17 +107,14 @@ const text = ref("");
 
 /* 视图容器样式 - 固定大小且半透明 */
 .view-container {
-  width: 100%;
   height: calc(100vh - 6rem); /* 固定高度，减去顶部导航栏高度和边距 */
-  max-width: 1100px;
   margin-left: 30px;
   background-color: rgba(40, 42, 54, 0.7);
   backdrop-filter: blur(8px);
   transition: background-color 0.3s ease;
-  opacity: 0.5;
 }
 .dark .view-container {
-  background-color: rgba(140, 148, 194, 0.7);
+  background-color: rgba(240, 240, 240, 0.7);
 }
 .border-r {
   border-right: 1px solid #545768;
