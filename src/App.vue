@@ -3,11 +3,11 @@
     <!-- 左侧菜单栏 -->
     <div class="w-64 bg-background text-foreground border-r border-border p-4 rounded-lg flex flex-col justify-between">
       <div class="flex flex-col gap-4">
-        <router-link to="/recommend">
-          <HoverButton text="首页" class="w-full text-color hoverbuttoncolor" :icon="HouseIcon" />
+        <router-link to="/selected">
+          <HoverButton text="精选" class="w-full text-color hoverbuttoncolor" :icon="HouseIcon" />
         </router-link>
-        <router-link to="/video">
-          <HoverButton text="视频" class="w-full text-color hoverbuttoncolor" :icon="VideoIcon" iconColor="#FF6B6B" />
+        <router-link to="/recommend">
+          <HoverButton text="推荐" class="w-full text-color hoverbuttoncolor" :icon="VideoIcon" iconColor="#FF6B6B" />
         </router-link>
         <router-link to="/favorite">
           <HoverButton text="收藏" class="w-full text-color hoverbuttoncolor" :icon="LikeIcon" iconColor="#4CAF50" />
@@ -36,7 +36,18 @@
       </div>
       <!-- 内容区域 - 固定大小且半透明的视图容器 -->
       <div class="view-container p-6 bg-background/70 backdrop-blur-md rounded-lg m-4 overflow-auto">
-        <Recommend />
+        <router-view v-slot="{ Component }">
+          <transition
+            mode="out-in"
+            @before-leave="startTransition"
+            @after-enter="endTransition"
+          >
+            <template v-if="!isLoading">
+              <component :is="Component" />
+            </template>
+            <LoadingBalls :size="0.8" v-else />
+          </transition>
+        </router-view>
       </div>
     </div>
   </div>
@@ -44,8 +55,9 @@
 
 <script setup lang="ts">
 import HoverButton from './components/HoverButton.vue'
-import { ref, watch } from 'vue'
+import { ref, watch, onUnmounted } from 'vue'
 import VanishingInput from './components/VanishingInput.vue';
+import LoadingBalls from './components/LoadingBalls.vue';
 import HouseIcon from './components/icons/house.vue';
 import VideoIcon from './components/icons/video.vue';
 import LikeIcon from './components/icons/like.vue';
@@ -54,7 +66,6 @@ import MessageIcon from './components/icons/message.vue';
 import ParticlesBg from './components/ParticlesBg.vue';
 import { useColorMode } from '@vueuse/core';
 import ThemeToggle from './components/ThemeToggle.vue';
-import Recommend from './views/Recommend.vue';
 
 const colorMode = useColorMode();
 const isDark = ref(colorMode.value === 'dark');
@@ -74,6 +85,38 @@ const placeholders = [
 ];
 
 const text = ref("");
+
+// 路由过渡状态管理
+const isLoading = ref(false);
+let transitionTimeout: number | null = null;
+
+// 清理定时器
+const clearTransitionTimer = () => {
+  if (transitionTimeout) {
+    clearTimeout(transitionTimeout);
+    transitionTimeout = null;
+  }
+};
+
+// 开始过渡动画
+const startTransition = () => {
+  clearTransitionTimer();
+  isLoading.value = true;
+};
+
+// 结束过渡动画
+const endTransition = () => {
+  clearTransitionTimer();
+  // 设置较短的动画持续时间
+  transitionTimeout = window.setTimeout(() => {
+    isLoading.value = false;
+  }, 1000);
+};
+
+// 在组件卸载时清理定时器
+onUnmounted(() => {
+  clearTransitionTimer();
+});
 
 </script>
 

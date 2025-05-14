@@ -1,22 +1,28 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Recommend from '../views/Recommend.vue';
+import Selected from '../views/Selected.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/recommend',
-      name: 'recommend',
-      component: () => import('../views/Recommend.vue')
+      path: '/',
+      redirect: '/recommend'
     },
     {
-      path: '/video',
-      name: 'video',
-      component: () => import('../views/Recommend.vue')
+      path: '/selected',
+      name: 'selected',
+      component: Selected
+    },
+    {
+      path: '/recommend',
+      name: 'recommend',
+      component: Recommend
     },
     {
       path: '/favorite',
       name: 'favorite',
-      component: () => import('../views/Recommend.vue')
+      component: Recommend
     }
   ]
 })
